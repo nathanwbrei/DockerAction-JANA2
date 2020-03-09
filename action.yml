@@ -4,7 +4,7 @@ description: 'Build JANA2 and run JTest plugin'
 inputs:
   branch:  # id of input
     description: 'branch name (unused at moment)'
-    required: true
+    required: false
     default: 'master'
 #outputs:
 #  time: # id of output
