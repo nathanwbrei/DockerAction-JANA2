@@ -1,0 +1,16 @@
+
+name: 'DockerAction-JANA2'
+description: 'Build JANA2 and run JTest plugin'
+inputs:
+  branch:  # id of input
+    description: 'branch name (unused at moment)'
+    required: true
+    default: 'master'
+#outputs:
+#  time: # id of output
+#    description: 'The time we greeted you'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ branch }}
