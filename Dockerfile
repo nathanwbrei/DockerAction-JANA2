@@ -50,6 +50,7 @@ FROM rootproject/root-conda:6.20.00
 # in the container. I don't know a good way of knowing this other than
 # trial and error.
 ARG CXX_STANDARD=17
+ARG BRANCH=master
 
 RUN conda install -y \
 	cmake \
@@ -62,6 +63,7 @@ RUN git clone https://github.com/JeffersonLab/JANA2 /opt/JANA2
 
 # Compile and install JANA source
 RUN cd /opt/JANA2 \
+    && git checkout $BRANCH
     && mkdir build \
     && cd build \
     && cmake .. -DCMAKE_INSTALL_PREFIX=/opt/JANA2/Linux -DCMAKE_CXX_STANDARD=17 \
