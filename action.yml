@@ -3,12 +3,17 @@ name: 'DockerAction-JANA2'
 description: 'Build JANA2 and run JTest plugin'
 inputs:
   branch:  # id of input
-    description: 'branch name (unused at moment)'
+    description: 'branch name'
     required: false
     default: 'master'
 #outputs:
 #  time: # id of output
 #    description: 'The time we greeted you'
+
+# This specifies that docker will be used and the Dockerfile that the
+# image should be built from. The args section specifies arguments that
+# should be passed to the contaioner when it is run (not when the image
+# is being built).
 runs:
   using: 'docker'
   image: 'Dockerfile'

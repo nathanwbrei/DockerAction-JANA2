@@ -62,12 +62,12 @@ RUN conda install -y \
 RUN git clone https://github.com/JeffersonLab/JANA2 /opt/JANA2
 
 # Compile and install JANA source
-RUN cd /opt/JANA2 \
-    && git checkout $BRANCH
-    && mkdir build \
-    && cd build \
-    && cmake .. -DCMAKE_INSTALL_PREFIX=/opt/JANA2/Linux -DCMAKE_CXX_STANDARD=17 \
-    && make -j8 install
+#RUN cd /opt/JANA2 \
+#    && git checkout $BRANCH
+#    && mkdir build \
+#    && cd build \
+#    && cmake .. -DCMAKE_INSTALL_PREFIX=/opt/JANA2/Linux -DCMAKE_CXX_STANDARD=17 \
+#    && make -j8 install
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY entrypoint.sh /entrypoint.sh
