@@ -6,13 +6,10 @@ inputs:
     description: 'branch name'
     required: false
     default: 'master'
-#outputs:
-#  time: # id of output
-#    description: 'The time we greeted you'
 
 # This specifies that docker will be used and the Dockerfile that the
 # image should be built from. The args section specifies arguments that
-# should be passed to the contaioner when it is run (not when the image
+# should be passed to the container when it is run (not when the image
 # is being built).
 runs:
   using: 'docker'

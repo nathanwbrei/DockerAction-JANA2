@@ -1,9 +1,13 @@
 #--------------------------------------------------------------------------
 # JANA Docker Container for GitHub Action
 #
-# This dockerfile is used to make a docker image from the latest
-# JANA2 master that is then used to run some tests to confirm
-# the build. This is done as a GitHub Action triggered by either
+# This Dockerfile is used to make a docker image that contains a C++
+# compiler and optional dependency packages (e.g. ROOT, ZMQ). It also 
+# clones the JANA2 repository, but does not build it. Building JANA2
+# is deferred until the entrypoint.sh script is run by the container
+# since that is where we can pass in arguments to specify the branch.
+#
+# This is done as a GitHub Action triggered by either
 # a pull request being submitted or a direct commit to master.
 # This was put together based on this documentation from GitHub:
 #
@@ -17,14 +21,13 @@
 # compiler (gcc 7.2 at the time of this writing). It also contains python3
 # and the python development packages (presumably since ROOT needs them).
 #
-# The JANA2 build is done here as part of the container build and the
-# "entrypoint.sh" script used to run tests of the software.
+# The JANA2 build is done in the entrypoint.sh and the tests run immediately
+# after.
 #
 # Note that we are restricted to using package versions and settings used
 # in the ROOT base image. Specifically, the gcc compiler version and the
-# C++ standard they used to build ROOT. The standard is set use the
-# CXX_STANDARD ARG below which may need to be updated when the base container
-# changes.
+# C++ standard they used to build ROOT. The standard is set in the entrypoint.sh
+# script and may need to be updated when the base container changes.
 #
 #--------------------------------------------------------------------------
 # Normally, this is built as a temporary image by GitHub in order
@@ -48,9 +51,9 @@ FROM rootproject/root-conda:6.20.00
 
 # This needs to be set to whatever was used to build the ROOT version
 # in the container. I don't know a good way of knowing this other than
-# trial and error.
-ARG CXX_STANDARD=17
-ARG BRANCH=master
+# trial and error. We set this an environment variable that is then
+# used in the entrypoint.sh script.
+ENV CXX_STANDARD=17
 
 RUN conda install -y \
 	cmake \
@@ -58,19 +61,12 @@ RUN conda install -y \
 	czmq \
 	pyzmq
 
-# Download JANA source
+# Download JANA source (compiling deferred to entrypoint.sh)
 RUN git clone https://github.com/JeffersonLab/JANA2 /opt/JANA2
 
-# Compile and install JANA source
-#RUN cd /opt/JANA2 \
-#    && git checkout $BRANCH
-#    && mkdir build \
-#    && cd build \
-#    && cmake .. -DCMAKE_INSTALL_PREFIX=/opt/JANA2/Linux -DCMAKE_CXX_STANDARD=17 \
-#    && make -j8 install
-
-# Copies your code file from your action repository to the filesystem path `/` of the container
+# Copy entrypoint.sh to the filesystem path `/` of the container
 COPY entrypoint.sh /entrypoint.sh
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 ENTRYPOINT ["/entrypoint.sh"]
+
