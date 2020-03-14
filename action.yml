@@ -1,11 +1,19 @@
+#
+# This specifies a custom GitHub action that is used to
+# build a Docker image as part of the JANA2 CI.
+#
+# The action takes a single argument named "ref" that
+# should come from the GITHUB_REF for the branch to
+# be built. Note that this is not the branch name
+# itself. See notes in entrypoint.sh for more details.
+
 
 name: 'DockerAction-JANA2'
 description: 'Build JANA2 and run JTest plugin'
 inputs:
-  branch:  # id of input
-    description: 'branch name'
-    required: false
-    default: 'master'
+  ref:  # id of input
+    description: 'github REF'
+    required: true
 
 # This specifies that docker will be used and the Dockerfile that the
 # image should be built from. The args section specifies arguments that
@@ -15,4 +23,4 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.branch }}
+    - ${{ inputs.ref }}

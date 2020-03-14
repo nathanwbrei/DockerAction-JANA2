@@ -26,8 +26,10 @@
 #
 # Note that we are restricted to using package versions and settings used
 # in the ROOT base image. Specifically, the gcc compiler version and the
-# C++ standard they used to build ROOT. The standard is set in the entrypoint.sh
-# script and may need to be updated when the base container changes.
+# C++ standard they used to build ROOT. The standard is set as the
+# CXX_STANDARD environment variable here and then used in entrypoint.sh.
+# The value set for this may need to be changed if the "FROM" base image
+# is changed.
 #
 #--------------------------------------------------------------------------
 # Normally, this is built as a temporary image by GitHub in order
@@ -49,10 +51,19 @@
 # Use ROOT supplied container
 FROM rootproject/root-conda:6.20.00
 
-# This needs to be set to whatever was used to build the ROOT version
-# in the container. I don't know a good way of knowing this other than
-# trial and error. We set this an environment variable that is then
-# used in the entrypoint.sh script.
+# The CXX_STANDARD environment variable needs to be set to whatever
+# was used to build the ROOT version in the container. The best way
+# to figure this out is to run the root-config program with the
+# --cflags option. e.g.
+#
+#    docker run --rm rootproject/root-conda:6.20.00 root-config --cflags
+#
+# n.b. this may display something like "-std=c++1z" which is actually
+# C++17. You may need to google the exact string to find what number
+# needs to be set here.
+#
+# We set this as an environment variable that is then used in the
+# entrypoint.sh script.
 ENV CXX_STANDARD=17
 
 RUN conda install -y \
