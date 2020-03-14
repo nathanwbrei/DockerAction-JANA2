@@ -14,24 +14,22 @@
 # CMAKE_INSTALL_PREFIX below.
 #
 
-export BRANCH=$1
-echo "--- Building JANA for branch $BRANCH --------------"
+echo "--- Building JANA --------------"
 cd /opt/JANA2
-git checkout $BRANCH
 mkdir build
 cd build
-cmake .. -DCMAKE_INSTALL_PREFIX=/opt/JANA2/Linux -DCMAKE_CXX_STANDARD=$CXX_STANDARD
-make -j8 install
+#cmake .. -DCMAKE_INSTALL_PREFIX=/opt/JANA2/Linux -DCMAKE_CXX_STANDARD=$CXX_STANDARD
+#make -j8 install
 echo "------------------------"
 
 
 echo "--- JTest --------------"
 export JANA_PLUGIN_PATH=/plugins
-jana -PPLUGINS=JTest -Pjana:nevents=100
+#jana -PPLUGINS=JTest -Pjana:nevents=100
 echo "------------------------"
 
 echo "--- tests --------------"
 export JANA_PLUGIN_PATH=/plugins
-tests
+#tests
 echo "------------------------"
 
