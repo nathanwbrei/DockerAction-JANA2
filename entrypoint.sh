@@ -4,10 +4,11 @@
 # that gets built by GitHub as part of a GitHub Action to test
 # pull requests and commits to master.
 #
-# This builds JANA2 using the branch given as the only argument
-# to this script. What actually gets passed is not the branch
+# This builds JANA2 using the branch given by the GITHUB_REF
+# environment variable (passed in by GitHub when container
+# is run). What actually gets passed is not the branch
 # name, but a repository reference from GITHUB_REF that looks
-# something like "refs/61/merge". This gets fetched from the
+# something like "refs/pull/61/merge". This gets fetched from the
 # origin into a branch named "CI" which is then checked out.
 #
 # This also uses the CXX_STANDARD environment variable
