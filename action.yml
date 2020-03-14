@@ -1,12 +1,18 @@
 
 name: 'DockerAction-JANA2'
-description: 'Build JANA2 and run tests'
+description: 'Build JANA2 and run JTest plugin'
+inputs:
+  branch:  # id of input
+    description: 'branch name'
+    required: false
+    default: 'master'
 
-# This specifies that docker will be used and the Dockerfile
-# that the image should be built from. It assumes this is being
-# done from a directory that already contains the source and
-# that it is checked out to the correct branch. See the file
-# JANA2/.github/workflows/ccpp-docker.yml for more details.
+# This specifies that docker will be used and the Dockerfile that the
+# image should be built from. The args section specifies arguments that
+# should be passed to the container when it is run (not when the image
+# is being built).
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  args:
+    - ${{ inputs.branch }}

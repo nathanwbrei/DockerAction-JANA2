@@ -62,7 +62,7 @@ RUN conda install -y \
 	pyzmq
 
 # Download JANA source (compiling deferred to entrypoint.sh)
-#RUN git clone https://github.com/JeffersonLab/JANA2 /opt/JANA2
+RUN git clone https://github.com/JeffersonLab/JANA2 /opt/JANA2
 
 # Copy entrypoint.sh to the filesystem path `/` of the container
 COPY entrypoint.sh /entrypoint.sh
