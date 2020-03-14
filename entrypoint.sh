@@ -28,16 +28,16 @@ cmake .. -DCMAKE_INSTALL_PREFIX=/opt/JANA2/Linux -DCMAKE_CXX_STANDARD=$CXX_STAND
 make -j8 install
 
 echo "--- Setting up JANA environment ----------------"
-export PATH=/opt/JANA2/bin:${PATH}
-export JANA_PLUGIN_PATH=/plugins
+export PATH=/opt/JANA2/Linux/bin:${PATH}
+export JANA_PLUGIN_PATH=/opt/JANA2/Linux/plugins
 echo "PATH=${PATH}"
 echo "JANA_PLUGIN_PATH=${JANA_PLUGIN_PATH}"
 
 echo "--- Running JTest plugin -----------------------"
 jana -PPLUGINS=JTest -Pjana:nevents=100
 
-echo "--- Running tests ------------------------------"
-tests
+echo "--- Running janatests ------------------------------"
+janatests
 
 echo "--- Done ---------------------------------------"
 
