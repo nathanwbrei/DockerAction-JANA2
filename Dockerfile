@@ -18,7 +18,7 @@
 # This builds on an image provided by the ROOT team that already contains
 # a build of ROOT. It then installs packages for cmake, and zmq so JANA2
 # can be built with zmq support. The base image already contains a c++
-# compiler (gcc 7.2 at the time of this writing). It also contains python3
+# compiler (gcc 7.3 at the time of this writing). It also contains python3
 # and the python development packages (presumably since ROOT needs them).
 #
 # The JANA2 build is done in the entrypoint.sh and the tests run immediately
@@ -49,14 +49,14 @@
 #--------------------------------------------------------------------------
 
 # Use ROOT supplied container
-FROM rootproject/root-conda:6.20.00
+FROM rootproject/root:6.22.00-conda
 
 # The CXX_STANDARD environment variable needs to be set to whatever
 # was used to build the ROOT version in the container. The best way
 # to figure this out is to run the root-config program with the
 # --cflags option. e.g.
 #
-#    docker run --rm rootproject/root-conda:6.20.00 root-config --cflags
+#    docker run --rm rootproject/root:6.22.00-conda root-config --cflags
 #
 # n.b. this may display something like "-std=c++1z" which is actually
 # C++17. You may need to google the exact string to find what number
