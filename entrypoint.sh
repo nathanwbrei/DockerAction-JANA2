@@ -36,8 +36,8 @@ echo "JANA_PLUGIN_PATH=${JANA_PLUGIN_PATH}"
 echo "--- Running JTest plugin -----------------------"
 jana -PPLUGINS=JTest -Pjana:nevents=100
 
-echo "--- Running janatests ------------------------------"
-janatests
+echo "--- Running jana-unit-tests ------------------------------"
+jana-unit-tests
 
 echo "--- Done ---------------------------------------"
 
